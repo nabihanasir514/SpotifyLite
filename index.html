@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Spotify Lite - Your Favourite Music is Here</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav>
+    <ul>
+      <li class="brand">
+        <img src="spotifylogo.jpg" alt="Spotify" />Spotify
+      </li>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><button id="themeToggle">🌙</button></li>
+    </ul>
+  </nav>
+
+  <!-- Home Section -->
+  <section id="home" class="spotify-section">
+    <h1>Best of NCS - No Copyright Sounds</h1>
+    <div class="spotify-layout">
+      <!-- Song List -->
+      <div class="song-list" id="songList"></div>
+
+      <!-- Image -->
+      <div class="image-side">
+        <img src="background.png" alt="Girl Headphones" />
+      </div>
+    </div>
+
+    <!-- Hidden Audio Player -->
+    <audio id="audioPlayer" style="display: none;"></audio>
+
+    <!-- Volume Control -->
+    <div class="volume-control">
+      <label for="volumeSlider">
+        <i class="fa-solid fa-volume-high" id="volumeIcon"></i> Volume
+      </label>
+      <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about">
+    <h2>About This App</h2>
+    <p>
+      <strong>Spotify Lite</strong> is a sleek, responsive music player designed for streaming top NCS tracks.<br><br>
+      Built using <strong>HTML, CSS, and JavaScript</strong>, it delivers smooth playback and a dynamic interface.<br><br>
+      Responsive and mobile-friendly, with dark/light mode and volume control.<br><br>
+      Includes shuffle, loop, and auto-highlight of the playing song.<br><br>
+      Ideal for relaxing, coding, or daily listening – proudly crafted by <strong>Nabiha</strong>.
+    </p>
+    <div class="creator-box">
+      <p>Crafted with care by <strong>Nabiha</strong></p>
+    </div>
+  </section>
+
+  <!-- Bottom Music Bar -->
+  <div class="bottom">
+    <img src="playing.gif" alt="Visualizer" id="visualizer" style="width: 100px; display: none; margin-bottom: 5px;" />
+    <input type="range" name="range" id="myprogressbar" min="0" max="100" />
+    <div class="icons">
+      <i class="fa-solid fa-backward-step" onclick="prevSong()"></i>
+      <i class="fa-solid fa-play-circle" onclick="togglePlayPause()"></i>
+      <i class="fa-solid fa-forward-step" onclick="nextSong()"></i>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    const audioPlayer = document.getElementById("audioPlayer");
+    const progressBar = document.getElementById("myprogressbar");
+    const volumeSlider = document.getElementById("volumeSlider");
+    const themeToggle = document.getElementById("themeToggle");
+    const visualizer = document.getElementById("visualizer");
+    const volumeIcon = document.getElementById("volumeIcon");
+    const songList = document.getElementById("songList");
+
+    const songs = [
+      { title: "On & On - Cartoon", path: "onandon.mp3", duration: "3:30" },
+      { title: "Spectre - Alan Walker", path: "Alan Walker - Spectre.mp3", duration: "3:50" },
+      { title: "Diviners - Philly K.", path: "Diviners, Philly K. - Savannah (feat. Philly K) [NCS Release].mp3", duration: "3:50" },
+      { title: "Candlelight - Jack Savoretti", path: "candle-light.mp3", duration: "3:48" },
+      { title: "Fiesta Tonight - Hungrybirds", path: "fiesta-tonight.mp3", duration: "3:52" },
+      { title: "Little Star - The Little 'uns", path: "little-star-in-the-sky.mp3", duration: "3:43" },
+      { title: "Luna Lark - Julius Dreisig", path: "Luna Lark, Julius Dreisig - Where'd You Go [NCS Release].mp3", duration: "4:01" },
+      { title: "Cradles - Sub Urban", path: "Sub Urban - Cradles [NCS Release].mp3", duration: "3:33" },
+      { title: "Mortals - Warriyo", path: "Warriyo, Laura Brehm - Mortals (feat. Laura Brehm) [NCS Release].mp3", duration: "3:34" },
+      { title: "Invincible - DEAF KEV", path: "DEAF KEV - Invincible [NCS Release].mp3", duration: "3:29" }
+    ];
+
+    let currentSongIndex = 0;
+
+    songList.innerHTML = songs.map((song, index) => `
+      <div class="song-item" onclick="playSong('${song.path}', ${index})">
+        <span class="number">${(index + 1).toString().padStart(2, '0')}</span>
+        <span class="title">${song.title}</span>
+        <span class="duration">${song.duration}</span>
+        <a href="${song.path}" download title="Download">
+          <i class="fa-solid fa-download" style="color: white; margin-left: 10px;"></i>
+        </a>
+      </div>
+    `).join("");
+
+    function playSong(path, index) {
+      currentSongIndex = index;
+      audioPlayer.src = path;
+      audioPlayer.play();
+    }
+
+    function togglePlayPause() {
+      if (audioPlayer.paused) {
+        audioPlayer.play();
+      } else {
+        audioPlayer.pause();
+      }
+    }
+
+    function nextSong() {
+      currentSongIndex = (currentSongIndex + 1) % songs.length;
+      playSong(songs[currentSongIndex].path, currentSongIndex);
+    }
+
+    function prevSong() {
+      currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+      playSong(songs[currentSongIndex].path, currentSongIndex);
+    }
+
+    audioPlayer.addEventListener("timeupdate", () => {
+      const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+      progressBar.value = progress || 0;
+    });
+
+    progressBar.addEventListener("input", () => {
+      audioPlayer.currentTime = (progressBar.value / 100) * audioPlayer.duration;
+    });
+
+    volumeSlider.addEventListener("input", () => {
+      audioPlayer.volume = volumeSlider.value;
+      if (volumeSlider.value == 0) {
+        volumeIcon.className = "fa-solid fa-volume-xmark";
+      } else if (volumeSlider.value < 0.5) {
+        volumeIcon.className = "fa-solid fa-volume-low";
+      } else {
+        volumeIcon.className = "fa-solid fa-volume-high";
+      }
+    });
+
+    themeToggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark-mode");
+      const isDark = document.body.classList.contains("dark-mode");
+      themeToggle.textContent = isDark ? "☀️" : "🌙";
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    });
+
+    window.addEventListener("DOMContentLoaded", () => {
+      if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark-mode");
+        themeToggle.textContent = "☀️";
+      } else {
+        themeToggle.textContent = "🌙";
+      }
+    });
+
+    audioPlayer.addEventListener("play", () => {
+      visualizer.style.display = "block";
+    });
+
+    audioPlayer.addEventListener("pause", () => {
+      visualizer.style.display = "none";
+    });
+
+    audioPlayer.addEventListener("ended", () => {
+      visualizer.style.display = "none";
+    });
+  </script>
+</body>
+</html>

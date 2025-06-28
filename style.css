@@ -1,0 +1,281 @@
+/* General Reset */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Varela Round', sans-serif;
+  background-color: #faebd7;
+  color: #222;
+  transition: background 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+  background-color: #121212;
+  color: #eee;
+}
+
+/* Navigation */
+nav {
+  background-color: #000;
+  color: #fff;
+  padding: 12px 30px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+nav .brand {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+}
+
+nav .brand img {
+  height: 40px;
+  margin-right: 10px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #1db954;
+}
+
+/* Main Section */
+.spotify-section {
+  padding: 40px 30px;
+}
+
+.spotify-section h1 {
+  margin-bottom: 25px;
+  font-size: 28px;
+  color: #111;
+}
+
+/* Layout */
+.spotify-layout {
+  background-color: #000;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+}
+
+/* Song List */
+.song-list {
+  flex: 1;
+  min-width: 300px;
+  padding: 20px;
+  color: white;
+}
+
+.song-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.song-item:hover,
+.song-item.active {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.song-item .number {
+  width: 30px;
+  color: #1db954;
+}
+
+.song-item .title {
+  flex: 1;
+  margin-left: 10px;
+}
+
+.song-item .duration {
+  width: 50px;
+  text-align: right;
+}
+
+.song-item a {
+  color: white;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+.song-item a:hover i {
+  color: #1db954;
+}
+
+/* Image */
+.image-side {
+  flex: 1;
+  min-width: 250px;
+  max-height: 400px;
+  overflow: hidden;
+}
+
+.image-side img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Bottom Bar */
+.bottom {
+  position: sticky;
+  bottom: 0;
+  background-color: #000;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+}
+
+#myprogressbar,
+#volumeSlider {
+  width: 80%;
+  margin-bottom: 10px;
+  accent-color: #1db954;
+}
+
+/* Icons */
+.icons {
+  font-size: 26px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.icons i {
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.icons i:hover {
+  color: #1db954;
+}
+
+/* Volume Control */
+.volume-control {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #000;
+}
+
+body.dark-mode .volume-control {
+  color: #fff;
+}
+
+/* About Section */
+#about {
+  padding: 60px 30px;
+  background-color: #f2f2f2;
+}
+
+#about h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #000;
+}
+
+#about p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Creator */
+.creator-box {
+  margin-top: 30px;
+  padding: 15px;
+  background-color: #1db954;
+  color: white;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 18px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Theme Toggle */
+#themeToggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #1db954;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1001;
+  transition: background 0.3s;
+}
+
+#themeToggle:hover {
+  background: #17a64a;
+}
+
+/* Dark mode tweaks */
+body.dark-mode .spotify-section h1,
+body.dark-mode #about h2 {
+  color: #fff;
+}
+
+body.dark-mode #about {
+  background-color: #1e1e1e;
+}
+
+body.dark-mode #about p {
+  color: #ccc;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .spotify-layout {
+    flex-direction: column;
+  }
+
+  .icons {
+    gap: 20px;
+  }
+
+  #myprogressbar,
+  #volumeSlider {
+    width: 95%;
+  }
+}
